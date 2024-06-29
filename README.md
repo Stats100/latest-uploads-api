@@ -2,8 +2,8 @@
 Get the latest five uploads for any YouTube channel!
 
 # How to use
-It's very simple, just make a request to `https://lastestvid.stats100.xyz/get/<CHANNEL_ID_HERE>`  
-For example, to get the latest uploads for [MrBeast](https://youtube.com/@mrbeast), just have to make a simple request to `https://lastestvid.stats100.xyz/get/UCX6OQ3DkcsbYNE6H8uQQuVA` and get an example response like this:
+It's very simple, just make a request to `https://latestvid.stats100.xyz/get/<CHANNEL_ID_HERE>`  
+For example, to get the latest uploads for [MrBeast](https://youtube.com/@mrbeast), just have to make a simple request to `https://latestvid.stats100.xyz/get/UCX6OQ3DkcsbYNE6H8uQQuVA` and get an example response like this:
 
 ```json
 [
