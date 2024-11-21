@@ -1,3 +1,4 @@
+use actix_cors::Cors;
 use actix_web::{web, App, HttpResponse, HttpServer, Responder};
 use reqwest;
 use serde::Deserialize;
@@ -94,8 +95,17 @@ async fn main() -> std::io::Result<()> {
 
     println!("Server is running on http://127.0.0.1:{}", port);
 
-    HttpServer::new(|| App::new().route("/get/{id}", web::get().to(get_videos)))
-        .bind(("127.0.0.1", port))?
-        .run()
-        .await
+    HttpServer::new(|| {
+        App::new()
+            .wrap(
+                Cors::default()
+                    .allow_any_origin()
+                    .allow_any_method()
+                    .allow_any_header()
+            )
+            .route("/get/{id}", web::get().to(get_videos))
+    })
+    .bind(("127.0.0.1", port))?
+    .run()
+    .await
 }
