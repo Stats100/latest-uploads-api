@@ -41,9 +41,8 @@ async fn get_videos(info: web::Path<Info>) -> impl Responder {
                                     let video_id = item["snippet"]["resourceId"]["videoId"]
                                         .as_str()
                                         .map(|s| s.to_string());
-                                    let title = item["snippet"]["title"]
-                                        .as_str()
-                                        .map(|s| s.to_string());
+                                    let title =
+                                        item["snippet"]["title"].as_str().map(|s| s.to_string());
 
                                     match (video_id, title) {
                                         (Some(video_id), Some(title)) => Some(serde_json::json!({
@@ -67,14 +66,12 @@ async fn get_videos(info: web::Path<Info>) -> impl Responder {
                                 .json(serde_json::json!({ "error": "No videos found" }))
                         }
                     }
-                    Err(_) => HttpResponse::InternalServerError().json(
-                        serde_json::json!({ "error": "Failed to parse response" }),
-                    ),
+                    Err(_) => HttpResponse::InternalServerError()
+                        .json(serde_json::json!({ "error": "Failed to parse response" })),
                 }
             } else {
-                HttpResponse::InternalServerError().json(
-                    serde_json::json!({ "error": response.status().to_string() }),
-                )
+                HttpResponse::InternalServerError()
+                    .json(serde_json::json!({ "error": response.status().to_string() }))
             }
         }
         Err(_) => HttpResponse::InternalServerError()
@@ -101,9 +98,10 @@ async fn main() -> std::io::Result<()> {
                 Cors::default()
                     .allow_any_origin()
                     .allow_any_method()
-                    .allow_any_header()
+                    .allow_any_header(),
             )
             .route("/get/{id}", web::get().to(get_videos))
+            .route("/get/{id}/", web::get().to(get_videos))
     })
     .bind(("127.0.0.1", port))?
     .run()
